@@ -42,6 +42,20 @@ class Bd {
     localStorage.setItem(id, JSON.stringify(despesa))
     localStorage.setItem('id', id)
   }
+
+  recuperarTodosRegistros() {
+    let despesas = []
+    let id = localStorage.getItem('id')
+    for (let i = 1; i <= id; i++) {
+      let despesa = JSON.parse(localStorage.getItem(i))
+
+      if (despesa !== null) {
+        despesas.push(despesa)
+      }
+    }
+
+    return despesas
+  }
 }
 
 let bd = new Bd()
@@ -108,5 +122,36 @@ const cadastroDespesaFalha = () => {
     getElementById('btn-voltar').classList.remove('btn-success')
     getElementById('btn-voltar').classList.add('btn-danger')
     getElementById('btn-voltar').innerHTML = 'Voltar e corrigir'
+  }
+}
+
+const carregaListaDespesas = () => {
+  let despesas = []
+  despesas = bd.recuperarTodosRegistros()
+
+  let lista_despesas = document.getElementById('lista_despesas')
+  despesas.forEach(objeto => {
+    console.log(objeto)
+    let linha = lista_despesas.insertRow() // cria <tr>
+    linha.insertCell(0).innerHTML = `${objeto.dia}/${objeto.mes}/${objeto.ano}` // cria a 1 <td>
+    linha.insertCell(1).innerHTML = verificaTipo(objeto.tipo) // cria a 2 <td>
+
+    linha.insertCell(2).innerHTML = objeto.descricao // cria a 3 <td>
+    linha.insertCell(3).innerHTML = objeto.valor // cria a 4 <td>
+  })
+}
+
+const verificaTipo = tipo => {
+  switch (tipo) {
+    case '1':
+      return (tipo = 'Alimentação')
+    case '2':
+      return (tipo = 'Educação')
+    case '3':
+      return (tipo = 'Lazer')
+    case '4':
+      return (tipo = 'Saúde')
+    case '5':
+      return (tipo = 'Transporte')
   }
 }
