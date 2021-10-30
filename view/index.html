@@ -156,7 +156,7 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="erroGravacao"
+      id="modalRegistraDespesa"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -165,9 +165,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-danger" id="exampleModalLabel">
-              Erro na gravação
-            </h5>
+            <h5 class="modal-title" id="modal_titulo"></h5>
             <button
               type="button"
               class="close"
@@ -177,49 +175,14 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            Existem campos obrigatórios que não foram preenchidos.
-          </div>
+          <div class="modal-body" id="modal_msg"></div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">
-              Voltar e corrigir
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="sucessoGravacao"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-success" id="exampleModalLabel">
-              Gravação efetuada!
-            </h5>
             <button
               type="button"
-              class="close"
+              class="btn"
               data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Gravação de despesa efetuada com sucesso.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">
-              Voltar
-            </button>
+              id="btn-voltar"
+            ></button>
           </div>
         </div>
       </div>

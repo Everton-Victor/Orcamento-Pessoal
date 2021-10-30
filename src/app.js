@@ -65,17 +65,48 @@ function cadastrarDespesa() {
 
   if (despesa.validarDados()) {
     bd.gravar(despesa)
-    $('#sucessoGravacao').modal('show')
-
-    {
-      document.getElementById('ano').value = ''
-      document.getElementById('mes').value = ''
-      document.getElementById('dia').value = ''
-      document.getElementById('tipo').value = ''
-      document.getElementById('descricao').value = ''
-      document.getElementById('valor').value = ''
-    }
+    cadastroDespesaSucesso()
+    $('#modalRegistraDespesa').modal('show')
+    limparCampos()
   } else {
-    $('#erroGravacao').modal('show')
+    cadastroDespesaFalha()
+    $('#modalRegistraDespesa').modal('show')
+  }
+}
+
+const limparCampos = () => {
+  with (document) {
+    getElementById('ano').value = ''
+    getElementById('mes').value = ''
+    getElementById('dia').value = ''
+    getElementById('tipo').value = ''
+    getElementById('descricao').value = ''
+    getElementById('valor').value = ''
+  }
+}
+
+const cadastroDespesaSucesso = () => {
+  with (document) {
+    getElementById('modal_titulo').innerHTML = 'Gravação efetuada!'
+    getElementById('modal_titulo').classList.remove('text-danger')
+    getElementById('modal_titulo').classList.add('text-success')
+    getElementById('modal_msg').innerHTML =
+      'Gravação de despesa efetuada com sucesso.'
+    getElementById('btn-voltar').classList.remove('btn-danger')
+    getElementById('btn-voltar').classList.add('btn-success')
+    getElementById('btn-voltar').innerHTML = 'Voltar'
+  }
+}
+
+const cadastroDespesaFalha = () => {
+  with (document) {
+    getElementById('modal_titulo').innerHTML = 'Gravação não efetuada!'
+    getElementById('modal_titulo').classList.remove('text-success')
+    getElementById('modal_titulo').classList.add('text-danger')
+    getElementById('modal_msg').innerHTML =
+      'Gravação de despesa não efetuada, pois existem campos não preenchidos.'
+    getElementById('btn-voltar').classList.remove('btn-success')
+    getElementById('btn-voltar').classList.add('btn-danger')
+    getElementById('btn-voltar').innerHTML = 'Voltar e corrigir'
   }
 }
