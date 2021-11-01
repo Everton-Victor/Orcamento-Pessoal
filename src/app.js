@@ -24,6 +24,8 @@ class Despesa {
   }
 }
 
+// ============================================
+
 class Bd {
   constructor() {
     let id = localStorage.getItem('id')
@@ -56,7 +58,52 @@ class Bd {
 
     return despesas
   }
+
+  pesquisar(despesa) {
+    let despesasFiltradas = []
+    despesasFiltradas = this.recuperarTodosRegistros()
+
+    if (despesa.ano !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        valor => valor.ano === despesa.ano
+      )
+    }
+
+    if (despesa.mes !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        valor => valor.mes === despesa.mes
+      )
+    }
+
+    if (despesa.dia !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        valor => valor.dia === despesa.dia
+      )
+    }
+
+    if (despesa.tipo !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        valor => valor.tipo === despesa.tipo
+      )
+    }
+
+    if (despesa.descricao !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        valor => valor.descricao === despesa.descricao
+      )
+    }
+
+    if (despesa.valor !== '') {
+      despesasFiltradas = despesasFiltradas.filter(
+        val => val.valor === despesa.valor
+      )
+    }
+
+    return despesasFiltradas
+  }
 }
+
+// ============================================
 
 let bd = new Bd()
 
@@ -88,6 +135,8 @@ function cadastrarDespesa() {
   }
 }
 
+// ============================================
+
 const limparCampos = () => {
   with (document) {
     getElementById('ano').value = ''
@@ -98,6 +147,8 @@ const limparCampos = () => {
     getElementById('valor').value = ''
   }
 }
+
+// ============================================
 
 const cadastroDespesaSucesso = () => {
   with (document) {
@@ -112,6 +163,8 @@ const cadastroDespesaSucesso = () => {
   }
 }
 
+// ============================================
+
 const cadastroDespesaFalha = () => {
   with (document) {
     getElementById('modal_titulo').innerHTML = 'Gravação não efetuada!'
@@ -125,13 +178,16 @@ const cadastroDespesaFalha = () => {
   }
 }
 
-const carregaListaDespesas = () => {
-  let despesas = []
-  despesas = bd.recuperarTodosRegistros()
+// ============================================
+
+const carregaListaDespesas = (despesas = Array(), filtro = false) => {
+  if (despesas.length === 0 && filtro === false) {
+    despesas = bd.recuperarTodosRegistros()
+  }
 
   let lista_despesas = document.getElementById('lista_despesas')
+  lista_despesas.innerHTML = ''
   despesas.forEach(objeto => {
-    console.log(objeto)
     let linha = lista_despesas.insertRow() // cria <tr>
     linha.insertCell(0).innerHTML = `${objeto.dia}/${objeto.mes}/${objeto.ano}` // cria a 1 <td>
     linha.insertCell(1).innerHTML = verificaTipo(objeto.tipo) // cria a 2 <td>
@@ -154,4 +210,20 @@ const verificaTipo = tipo => {
     case '5':
       return (tipo = 'Transporte')
   }
+}
+
+// ============================================
+
+const pesquisarDespesa = () => {
+  let ano = document.getElementById('ano').value
+  let mes = document.getElementById('mes').value
+  let dia = document.getElementById('dia').value
+  let tipo = document.getElementById('tipo').value
+  let descricao = document.getElementById('descricao').value
+  let valor = document.getElementById('valor').value
+
+  let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor)
+  let despesas = bd.pesquisar(despesa)
+
+  carregaListaDespesas(despesas, true)
 }

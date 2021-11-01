@@ -110,7 +110,7 @@
 
         <div class="col-md-6">
           <select class="form-control" id="tipo">
-            <option>Tipo</option>
+            <option value="">Tipo</option>
             <option value="1">Alimentação</option>
             <option value="2">Educação</option>
             <option value="3">Lazer</option>
@@ -123,6 +123,7 @@
       <div class="row mb-5">
         <div class="col-md-8">
           <input
+            value=""
             type="text"
             class="form-control"
             placeholder="Descrição"
@@ -136,11 +137,16 @@
             class="form-control"
             placeholder="Valor"
             id="valor"
+            value=""
           />
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="pesquisarDespesa()"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
