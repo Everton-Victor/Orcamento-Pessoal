@@ -45,6 +45,10 @@ class Bd {
     localStorage.setItem('id', id)
   }
 
+  remover(id) {
+    localStorage.removeItem(id)
+  }
+
   recuperarTodosRegistros() {
     let despesas = []
     let id = localStorage.getItem('id')
@@ -52,6 +56,7 @@ class Bd {
       let despesa = JSON.parse(localStorage.getItem(i))
 
       if (despesa !== null) {
+        despesa.id = i
         despesas.push(despesa)
       }
     }
@@ -194,6 +199,20 @@ const carregaListaDespesas = (despesas = Array(), filtro = false) => {
 
     linha.insertCell(2).innerHTML = objeto.descricao // cria a 3 <td>
     linha.insertCell(3).innerHTML = objeto.valor // cria a 4 <td>
+
+    // Botão de exclusão
+    let btn = document.createElement('button')
+    btn.classList.add('btn')
+    btn.classList.add('btn-danger')
+    btn.innerHTML = "<i class='fas fa-times'></i>"
+    btn.id = 'id_despesa_' + objeto.id
+    btn.onclick = () => {
+      let id = btn.id.replace('id_despesa_', '')
+      bd.remover(id)
+      window.location.reload()
+    }
+
+    linha.insertCell(4).append(btn)
   })
 }
 
